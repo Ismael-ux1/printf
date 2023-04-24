@@ -12,7 +12,7 @@ int _printf(const char *format, ...)
 {
 va_list args;
 int count = 0;
-char ch;
+int num;
 
 va_start(args, format);
 
@@ -23,19 +23,15 @@ if (*format == '%')
 format++;
 switch (*format)
 {
-case 'c':
-ch = va_arg(args, int);
-putchar(ch);
-count++;
-break;
-case 's':
-count += printf("%s", va_arg(args, char *));
-break;
-case '%':
-putchar('%');
-count++;
+case 'd':
+case 'i':
+num = va_arg(args, int);
+count += printf("%d", num);
 break;
 default:
+putchar('%');
+putchar(*format);
+count += 2;
 break;
 }
 }
@@ -51,3 +47,4 @@ va_end(args);
 
 return (count);
 }
+
